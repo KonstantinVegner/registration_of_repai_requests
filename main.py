@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, request
-from flask_ngrok import run_with_ngrok
 import os
 from data import db_session
 from data.users import User
@@ -17,7 +16,6 @@ from data.requests_form import RequestsForm
 from flask_restful import abort
 
 app = Flask(__name__)
-run_with_ngrok(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
 
@@ -153,7 +151,6 @@ def requests_delete(id):
     else:
         abort(404)
     return redirect('/')
-
 
 
 if __name__ == '__main__':
