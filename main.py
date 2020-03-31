@@ -1,11 +1,12 @@
-from flask import Flask, render_template, redirect, request, make_response, session
+from flask import Flask, render_template, redirect, request
+from flask_ngrok import run_with_ngrok
 from data import db_session
 from data.users import User
 from data.requests import Requests
 import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 
@@ -15,6 +16,7 @@ from data.requests_form import RequestsForm
 from flask_restful import abort
 
 app = Flask(__name__)
+run_with_ngrok(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
 
@@ -144,7 +146,7 @@ def main():
             abort(404)
         return redirect('/')
 
-    app.run(port=8080, host='127.0.0.1')
+    app.run()
 
 
 if __name__ == '__main__':
