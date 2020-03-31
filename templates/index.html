@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    <h1>Список заявок</h1>
+    <a href="requests" class="btn btn-secondary">Добавить заявку</a>
+    {% for item in requests%}
+        <div class="col-md6 border rounded">
+            <div>
+                <b> {{item.title}} </b> <br>
+                Текст заявки:  {{item.about}} <br>
+                Дата заявки:  {{item.created_date.strftime("%d-%m-%Y %H:%M")}} <br>
+                Номер кабинета:  {{item.classroom}} <br>
+                Приоритет:  {{item.priority}}
+            </div>
+        </div>
+        <br>
+        {% if current_user.is_authenticated and current_user == item.user %}
+            <div>
+                <a href="/requests/{{ item.id }}" class="btn btn-warning">Изменить</a>
+                <a href="/requests_delete/{{ item.id }}" class="btn btn-danger">Удалить</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+<div align="center">
+    <img src="static/saver.jpg">
+</div>
+
+{% endif %}
+{% endblock %}
